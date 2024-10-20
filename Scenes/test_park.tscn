@@ -1,0 +1,109 @@
+[gd_scene load_steps=15 format=3 uid="uid://dmt7wi8ptn2de"]
+
+[ext_resource type="Material" uid="uid://cdbldk4lp6hkn" path="res://Materials/ground.tres" id="1_itac2"]
+[ext_resource type="Script" path="res://Scripts/camera_controller.gd" id="4_0q4i5"]
+[ext_resource type="Script" path="res://Scripts/custom_car/car_rb_controller.gd" id="4_jmnqw"]
+[ext_resource type="Script" path="res://Scripts/setup_shape.gd" id="5_23ojb"]
+[ext_resource type="PackedScene" uid="uid://cb6s8camej5gd" path="res://Scenes/pointer.tscn" id="5_dijis"]
+[ext_resource type="PackedScene" uid="uid://cvwd5tji4dxmc" path="res://Scenes/car_mesh.tscn" id="6_jlij0"]
+
+[sub_resource type="Environment" id="Environment_dru67"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.33
+reflected_light_source = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y12xc"]
+size = Vector2(100, 100)
+subdivide_width = 99
+subdivide_depth = 99
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_agaxm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uql3w"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mblfy"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qbe6f"]
+friction = 0.21
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_unbae"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_l3b6n"]
+radial_segments = 16
+rings = 8
+
+[node name="Test_Park" type="Node3D"]
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting"]
+environment = SubResource("Environment_dru67")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting"]
+transform = Transform3D(-0.927184, 0.202928, 0.314882, -7.34847e-08, -0.840567, 0.541708, 0.374607, 0.502263, 0.77936, 0, -5.13403, 0)
+shadow_enabled = true
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="ground_mesh" type="MeshInstance3D" parent="Terrain"]
+material_override = ExtResource("1_itac2")
+mesh = SubResource("PlaneMesh_y12xc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+shape = SubResource("HeightMapShape3D_agaxm")
+script = ExtResource("5_23ojb")
+height_max = 6.0
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 15.7705, 15.7705)
+fov = 37.7
+size = 12.428
+far = 145.05
+script = ExtResource("4_0q4i5")
+lerp_speed = 5.0
+target_node = NodePath("../RigidBody3D")
+follow_offset = Vector3(0, 10, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.087, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_uql3w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_mblfy")
+disabled = true
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.2877, 0)
+physics_material_override = SubResource("PhysicsMaterial_qbe6f")
+lock_rotation = true
+script = ExtResource("4_jmnqw")
+horsepower = 400.0
+turn_power = 10.0
+turn_damp = 5.0
+grounded_dis = 0.6
+drift_damp = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_unbae")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+visible = false
+mesh = SubResource("SphereMesh_l3b6n")
+
+[node name="Pointer" parent="RigidBody3D" instance=ExtResource("5_dijis")]
+visible = false
+
+[node name="RayCast3D" type="RayCast3D" parent="RigidBody3D"]
+target_position = Vector3(0, -100, 0)
+
+[node name="CarMesh" parent="RigidBody3D" instance=ExtResource("6_jlij0")]
+spring_force = 5.0
+spring_damp = 2.0

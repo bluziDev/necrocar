@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cdbldk4lp6hkn"]
+
+[ext_resource type="Shader" path="res://Materials/Shaders/ground.gdshader" id="1_6r4na"]
+[ext_resource type="Texture2D" uid="uid://dtrl3nci7lo6q" path="res://Textures/terrain_tex.tres" id="2_mig2v"]
+[ext_resource type="Texture2D" uid="uid://diy1f04tv4p6v" path="res://Textures/terrain_normal.tres" id="3_y42nk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_6r4na")
+shader_parameter/col = Color(0.356369, 0.240497, 0.165456, 1)
+shader_parameter/terrain_max_height = 6.0
+shader_parameter/height_map = ExtResource("2_mig2v")
+shader_parameter/normal_map = ExtResource("3_y42nk")
