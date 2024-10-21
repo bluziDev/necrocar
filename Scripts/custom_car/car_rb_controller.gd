@@ -14,6 +14,7 @@ var ray_length = 0
 var grounded = true
 @export var grounded_dis : float
 @export var drift_damp : float
+@export var turn_transfer : float
 var last_grounded_velocity = Vector3(0,0,0)
 
 func _physics_process(delta):
@@ -36,12 +37,16 @@ func _physics_process(delta):
 	else:
 		grounded = false
 	#move_dir = Input.get_axis("steer_right","steer_left") * turn_speed * delta
+	if grounded:
+		turn_speed += Input.get_axis("steer_right","steer_left") * turn_power * delta
+		turn_speed /= 1 + turn_damp * delta
 	move_dir_xz = move_dir_xz.rotated(Vector3(0,1,0),turn_speed * delta)
 	drift_axis = move_dir_xz.cross(ground_norm).normalized()
 	move_dir = drift_axis.cross(ground_norm).normalized()
 	if grounded:
-		turn_speed += Input.get_axis("steer_right","steer_left") * turn_power * delta
-		turn_speed /= 1 + turn_damp * delta
+		#transfer momentum by turning
+		linear_velocity = linear_velocity.rotated(ground_norm,turn_speed * turn_transfer * delta)
+		#main drive force
 		apply_central_force(horsepower * delta * move_dir * Input.get_axis("drive_forward","drive_backward"))
 		#damp velocity side to side
 		var drift_velocity = linear_velocity.project(drift_axis)

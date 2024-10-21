@@ -64,21 +64,19 @@ fov = 37.7
 size = 12.428
 far = 145.05
 script = ExtResource("4_0q4i5")
-lerp_speed = 5.0
+lerp_speed = 0.1
 target_node = NodePath("../RigidBody3D")
 follow_offset = Vector3(0, 10, 10)
+look_ahead = Vector3(0.85, 0, 0.85)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.087, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 0.733872, -0.679288, 0, 0.679288, 0.733872, 0, 6.087, 24.7131)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_uql3w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_mblfy")
-disabled = true
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.2877, 0)
@@ -89,7 +87,8 @@ horsepower = 400.0
 turn_power = 10.0
 turn_damp = 5.0
 grounded_dis = 0.6
-drift_damp = 2.0
+drift_damp = 1.0
+turn_transfer = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("SphereShape3D_unbae")
@@ -105,5 +104,3 @@ visible = false
 target_position = Vector3(0, -100, 0)
 
 [node name="CarMesh" parent="RigidBody3D" instance=ExtResource("6_jlij0")]
-spring_force = 5.0
-spring_damp = 2.0
