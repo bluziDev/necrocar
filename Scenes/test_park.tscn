@@ -70,7 +70,7 @@ follow_offset = Vector3(0, 10, 10)
 look_ahead = Vector3(0.85, 0, 0.85)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.733872, -0.679288, 0, 0.679288, 0.733872, 0, 6.087, 24.7131)
+transform = Transform3D(1, 0, 0, 0, 0.989055, -0.14755, 0, 0.14755, 0.989055, -1.90735e-06, 3.22836, 22.4161)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_uql3w")
