@@ -37,8 +37,10 @@ func _physics_process(delta):
 	else:
 		grounded = false
 	#move_dir = Input.get_axis("steer_right","steer_left") * turn_speed * delta
+	var drive_input = Input.get_axis("drive_forward","drive_backward")
 	if grounded:
-		turn_speed += Input.get_axis("steer_right","steer_left") * turn_power * delta
+		var turn_reverse = clamp(drive_input,0,1) * 2 - 1
+		turn_speed += Input.get_axis("steer_right","steer_left") * turn_power * -turn_reverse * delta
 		turn_speed /= 1 + turn_damp * delta
 	move_dir_xz = move_dir_xz.rotated(Vector3(0,1,0),turn_speed * delta)
 	drift_axis = move_dir_xz.cross(ground_norm).normalized()
@@ -47,7 +49,7 @@ func _physics_process(delta):
 		#transfer momentum by turning
 		linear_velocity = linear_velocity.rotated(ground_norm,turn_speed * turn_transfer * delta)
 		#main drive force
-		apply_central_force(horsepower * delta * move_dir * Input.get_axis("drive_forward","drive_backward"))
+		apply_central_force(horsepower * delta * move_dir * drive_input)
 		#damp velocity side to side
 		var drift_velocity = linear_velocity.project(drift_axis)
 		var vel_no_drift = linear_velocity - drift_velocity

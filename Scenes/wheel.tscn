@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://qo17wpba7iml"]
+
+[ext_resource type="PackedScene" uid="uid://co35shrbyebm4" path="res://Scenes/wheel_mesh.tscn" id="1_y5b56"]
+
+[node name="Wheel" type="Node3D"]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+
+[node name="Node3D" parent="." instance=ExtResource("1_y5b56")]

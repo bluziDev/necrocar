@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://p3eufhueyq3l"]
+
+[ext_resource type="PackedScene" uid="uid://qo17wpba7iml" path="res://Scenes/wheel.tscn" id="1_4tsa5"]
+
+[node name="Wheels" type="Node3D"]
+
+[node name="Wheel" parent="." instance=ExtResource("1_4tsa5")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.5, 0.5, 0.3)
+
+[node name="Wheel2" parent="." instance=ExtResource("1_4tsa5")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.5, 0.5, 0.3)
+
+[node name="Wheel3" parent="." instance=ExtResource("1_4tsa5")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.5, -0.5, 0.3)
+
+[node name="Wheel4" parent="." instance=ExtResource("1_4tsa5")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.5, -0.5, 0.3)
