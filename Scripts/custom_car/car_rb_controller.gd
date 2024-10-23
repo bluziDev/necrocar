@@ -11,7 +11,7 @@ var move_dir = drift_axis.cross(ground_norm).normalized()
 @onready var pointer = get_node("Pointer")
 @onready var ray = get_node("RayCast3D")
 var ray_length = 0
-var grounded = true
+var grounded = false
 @export var grounded_dis : float
 @export var drift_damp : float
 @export var turn_transfer : float
